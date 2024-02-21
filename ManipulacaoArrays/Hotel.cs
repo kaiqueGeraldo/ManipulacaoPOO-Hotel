@@ -183,10 +183,10 @@ namespace ManipulacaoArrays
         // método consultar
         public void Consultar()
         {
-            Console.WriteLine("O que você deseja cadastrar?: Cliente(1); Suite(2); Reserva(3): ");
-            int escolhaCadastro = EscolhaCSR();
+            Console.WriteLine("O que você deseja consultar?: Cliente(1); Suite(2); Reserva(3): ");
+            int escolhaConsultar = EscolhaCSR();
 
-            switch (escolhaCadastro)
+            switch (escolhaConsultar)
             {
                 case 1:
                     ConsultarCliente();
@@ -200,33 +200,114 @@ namespace ManipulacaoArrays
             }
         }
 
-        public void ConsultarCliente()
+        public void ConsultarCliente(string nome)
         {
             string loop;
             do
             {
-                Console.WriteLine("Insira o id do cliente que deseja consultar: ");
-                string ConsultarIdCliente = Console.ReadLine();
+                Console.WriteLine("Insira o nome do cliente que deseja consultar: ");
+                string ConsultarNomeCliente = Console.ReadLine();
 
-
-
-
-
+                Pessoa pessoa = BuscarCliente(nome);
+                if (pessoa != null)
+                {
+                    Console.WriteLine($"Nome: {Pessoas[i].Nome} - Idade: {Pessoas[i].Idade} - Gênero: {Pessoas[i].Genero} - Profissão: {Pessoas[i].Profissao}");
+                }
+                else
+                {
+                    Console.WriteLine($"Cliente '{nome}' não encontrado no sistema.");
+                }     
 
                 Console.WriteLine("Deseja consultar outro cliente? (S/N): ");
                 loop = Console.ReadLine();
 
             } while (loop.Equals("S", StringComparison.OrdinalIgnoreCase));
         }
-
-        public void ConsultarSuite()
+        
+        private Pessoa BuscarCliente(string nome)
         {
+            foreach (Pessoa pessoa in Pessoas)
+            {
+                if (pessoa.Nome.Equals(nome, StringComparison.OrdinalIgnoreCase))
+                {
+                    return pessoa;
+                }
+            }
+            return null;
+        }
+        
 
+        public void ConsultarSuite(int numero)
+        {
+            string loop;
+            do
+            {
+                Console.WriteLine("Insira o número da suíte que deseja consultar: ");
+                int ConsultarNumeroSuite = Console.ReadLine();
+
+                Suite suite = BuscarSuite(numero);
+                if (suite != null)
+                {
+                    Console.WriteLine($"{i + 1}. Número: {Suites[i].Numero} - Capacidade: {Suites[i].Capacidade} - Valor Diária: {Suites[i].ValorDiaria}");
+                }
+                else
+                {
+                    Console.WriteLine($"Suíte '{numero}' não encontrada no sistema.");
+                }     
+
+                Console.WriteLine("Deseja consultar outra suíte? (S/N): ");
+                loop = Console.ReadLine();
+
+            } while (loop.Equals("S", StringComparison.OrdinalIgnoreCase));
         }
 
-        public void ConsultarReserva()
+        private Suite BuscarSuite(int numero)
         {
+            foreach (Suite suite in Suites)
+            {
+                if (suite.Numero.Equals(numero))
+                {
+                    return suite;
+                }
+            }
+            return null;
+        }
+        
 
+        public void ConsultarReserva(int id)
+        {
+            string loop;
+            do
+            {
+                Console.WriteLine("Insira o id da reserva que deseja consultar: ");
+                int ConsultarIdReserva = Console.ReadLine();
+
+                Reserva reserva = BuscarReserva(id);
+                if (reserva != null)
+                {
+                    Console.WriteLine($"{i + 1}. Id: {Reservas[i].Id} - Id Cliente: {Reservas[i].PessoaId} - Número da suíte: {Reservas[i].SuiteNumero} - Data entrada: {Reservas[i].DataEntrada} - Data entrada: {Reservas[i].DataSaida} - Valor Final: R${Reservas[i].ValorFinal}");
+                }
+                else
+                {
+                    Console.WriteLine($"Reserva '{id}' não encontrada no sistema.");
+                }     
+
+                Console.WriteLine("Deseja consultar outra reserva? (S/N): ");
+                loop = Console.ReadLine();
+
+            } while (loop.Equals("S", StringComparison.OrdinalIgnoreCase));
+        }
+
+        private Suite BuscarReserva(int id)
+        {
+            foreach (Reserva reserva in Reservas)
+            {
+                if (reserva.Id.Equals(id))
+                {
+                    return reserva;
+                }
+            }
+            return null;
         }
 
         // fim método consultar
