@@ -80,10 +80,17 @@ namespace ManipulacaoArrays
             do
             {
                 Console.WriteLine("\nInsira o id do cliente: ");
-                int id;
-                while (!int.TryParse(Console.ReadLine(), out id))
+                int pessoaId;
+                while (!int.TryParse(Console.ReadLine(), out pessoaId) || pessoaId <= 0 || PessoaExiste(pessoaId)) // filtragem de erro
                 {
-                    Console.WriteLine("Por favor, insira um número válido para o id do cliente: "); // filtragem de erro
+                    if (PessoaExiste(pessoaId))
+                    {
+                        Console.WriteLine("ID da pessoa já existe. Por favor, insira um ID diferente: ");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Por favor, insira um número válido para o id do cliente: ");
+                    }
                 }
 
                 Console.WriteLine("Insira o nome do cliente: ");
@@ -91,9 +98,16 @@ namespace ManipulacaoArrays
 
                 Console.WriteLine("Insira a idade do cliente: ");
                 int idade;
-                while (!int.TryParse(Console.ReadLine(), out idade))
+                while (!int.TryParse(Console.ReadLine(), out idade) || idade < 18) // filtragem de erro
                 {
-                    Console.WriteLine("Por favor, insira um número válido para a idade do cliente: ");  // filtragem de erro
+                    if (idade < 18)
+                    {
+                        Console.WriteLine("Clientes menores de idade não podem ser cadastrados: ");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Por favor, insira um número válido para a idade do cliente: ");
+                    }
                 }
 
                 Console.WriteLine("Insira o gênero do cliente: ");
@@ -102,7 +116,7 @@ namespace ManipulacaoArrays
                 Console.WriteLine("Insira a profissão do cliente: ");
                 string profissao = Console.ReadLine();
 
-                Pessoa pessoa = new Pessoa { Id = id, Nome = nome, Idade = idade, Genero = genero, Profissao = profissao };
+                Pessoa pessoa = new Pessoa { Id = pessoaId, Nome = nome, Idade = idade, Genero = genero, Profissao = profissao };
                 Pessoas.Add(pessoa);
 
                 Console.WriteLine($"\nCliente {nome} cadastrado com sucesso!\n\nDeseja cadastrar outro cliente? (S/N): ");
@@ -117,30 +131,37 @@ namespace ManipulacaoArrays
             do
             {
                 Console.WriteLine("\nInsira o número da suíte: ");
-                int numero;
-                while (!int.TryParse(Console.ReadLine(), out numero))
+                int suiteNumero;
+                while (!int.TryParse(Console.ReadLine(), out suiteNumero) || suiteNumero <= 0 || SuiteExiste(suiteNumero)) // filtragem de erro
                 {
-                    Console.WriteLine("Por favor, insira um número válido para o id da suíte: "); // filtragem de erro
+                    if (SuiteExiste(suiteNumero))
+                    {
+                        Console.WriteLine("O número da suíte já cadastrado. Por favor insira um número diferente: ");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Por favor, insira um número válido para o id da suíte: ");
+                    }
                 }
 
                 Console.WriteLine("Insira a capacidade da suíte: ");
                 int capacidade;
-                while (!int.TryParse(Console.ReadLine(), out capacidade))
+                while (!int.TryParse(Console.ReadLine(), out capacidade) || capacidade < 0) // filtragem de erro
                 {
-                    Console.WriteLine("Por favor, insira um número válido para a capacidade da suite: "); // filtragem de erro
+                    Console.WriteLine("Por favor, insira um número válido para a capacidade da suite: ");
                 }
 
                 Console.WriteLine("Insira o valor da diária da suíte: ");
                 double valorDiaria;
-                while (!double.TryParse(Console.ReadLine(), out valorDiaria))
+                while (!double.TryParse(Console.ReadLine(), out valorDiaria) || valorDiaria < 0) // filtragem de erro
                 {
-                    Console.WriteLine("Por favor, insira um número válido para o valor da diária da suíte: "); // filtragem de erro
+                    Console.WriteLine("Por favor, insira um valor válido para o valor da diária da suíte: ");
                 }
 
-                Suite suite = new Suite { Numero = numero, Capacidade = capacidade, ValorDiaria = valorDiaria };
+                Suite suite = new Suite { Numero = suiteNumero, Capacidade = capacidade, ValorDiaria = valorDiaria };
                 Suites.Add(suite);
 
-                Console.WriteLine($"\nSuíte número {numero} cadastrada com sucesso!\n\nDeseja cadastrar outra suíte? (S/N): ");
+                Console.WriteLine($"\nSuíte número {suiteNumero} cadastrada com sucesso!\n\nDeseja cadastrar outra suíte? (S/N): ");
                 loop = Console.ReadLine();
 
             } while (loop.Equals("S", StringComparison.OrdinalIgnoreCase)); // loop para um novo cadastro
@@ -153,23 +174,30 @@ namespace ManipulacaoArrays
             {
                 Console.WriteLine("\nInsira id da reserva: ");
                 int id;
-                while (!int.TryParse(Console.ReadLine(), out id))
+                while (!int.TryParse(Console.ReadLine(), out id) || id <= 0 || ReservaExiste(id)) // filtragem de erro
                 {
-                    Console.WriteLine("Por favor, insira um número válido para o id da reserva: "); // filtragem de erro
+                    if (ReservaExiste(id))
+                    {
+                        Console.WriteLine("O id da reserva já cadastrado. Por favor insira um id diferente: ");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Por favor, insira um número válido para o id da reserva: ");
+                    }
                 }
 
                 Console.WriteLine("Insira id do cliente que fez a reserva: ");
                 int pessoaId;
-                while (!int.TryParse(Console.ReadLine(), out pessoaId))
+                while (!int.TryParse(Console.ReadLine(), out pessoaId) || !PessoaExiste(pessoaId)) // filtragem de erro
                 {
-                    Console.WriteLine("Por favor, insira um número válido para o id do cliente: "); // filtragem de erro
+                    Console.WriteLine("ID da pessoa não encontrado. Verifique o ID do cliente e tente novamente: ");
                 }
 
-                Console.WriteLine("Insira o número da suíte que estava na reserva: "); 
+                Console.WriteLine("Insira o número da suíte que estava na reserva: ");
                 int suiteNumero;
-                while (!int.TryParse(Console.ReadLine(), out suiteNumero))
+                while (!int.TryParse(Console.ReadLine(), out suiteNumero) || !SuiteExiste(suiteNumero)) // filtragem de erro
                 {
-                    Console.WriteLine("Por favor, insira um número válido para o número da suíte: "); // filtragem de erro
+                    Console.WriteLine("Suíte não encontrada. Verifique o número da suíte e tente novamente: ");
                 }
 
                 Console.WriteLine("Insira a data de entrada da reserva no formato (dd/mm/aaaa): ");
@@ -186,13 +214,24 @@ namespace ManipulacaoArrays
                     Console.WriteLine("Por favor, insira uma data válida no formato dd/mm/aaaa: ");
                 }
 
-                Suite suite = Suites.FirstOrDefault(s => s.Numero == suiteNumero); // importação da calsse suíte para dentro do método
+                Pessoa pessoa = Pessoas.FirstOrDefault(p => p.Id == pessoaId); // verificação do id inserido
+                Suite suite = Suites.FirstOrDefault(s => s.Numero == suiteNumero); // verificação do número inserido
 
-                if (suite == null)
+                if (pessoa == null)
+                {
+                    Console.WriteLine("Cliente não encontrada. Verifique o id do cliente e tente novamente.");
+                    continue;
+                }
+                else if (suite == null)
                 {
                     Console.WriteLine("Suite não encontrada. Verifique o número da suíte e tente novamente.");
                     continue;
                 }
+
+                double valorFinal = CalcularValorTotal(dataEntrada, dataSaida, suite);
+
+                Reserva reserva = new Reserva { Id = id, PessoaId = pessoaId, SuiteNumero = suiteNumero, DataEntrada = dataEntrada, DataSaida = dataSaida, ValorFinal = valorFinal };
+                Reservas.Add(reserva);
 
                 Console.WriteLine($"\nReserva número {id} cadastrada com sucesso.\nValor final: R${CalcularValorTotal(dataEntrada, dataSaida, suite)}!");
                 Console.WriteLine("\nDeseja cadastrar outra reserva? (S/N): ");
@@ -200,28 +239,6 @@ namespace ManipulacaoArrays
 
             } while (loop.Equals("S", StringComparison.OrdinalIgnoreCase)); // loop para um novo cadastro
         }
-
-        // método para calcular valor total  
-        static double CalcularValorTotal(DateTime dataEntrada, DateTime dataSaida, Suite suite)
-        {
-            int diasDeEstadia = (int)(dataSaida - dataEntrada).TotalDays;
-
-            double valorTotal;
-
-            if (diasDeEstadia > 10)
-            {
-                double valorDiariaComDesconto = suite.ValorDiaria * 0.9; // calculo para desconto de 10% caso a hospendagem ultrapasse 10 dias
-                valorTotal = diasDeEstadia * valorDiariaComDesconto;
-            }
-            else
-            {
-                valorTotal = diasDeEstadia * suite.ValorDiaria;
-            }
-
-            return valorTotal;
-        }
-
-        // fim método valor total
 
         // fim método cadastrar
 
@@ -258,29 +275,17 @@ namespace ManipulacaoArrays
                 Pessoa pessoa = BuscarCliente(ConsultarNomeCliente); // método para consultagem se existe o nome inserido
                 if (pessoa != null)
                 {
-                    Console.WriteLine($"Nome: {pessoa.Nome} - Idade: {pessoa.Idade} - Gênero: {pessoa.Genero} - Profissão: {pessoa.Profissao}");
+                    Console.WriteLine($"\nNome: {pessoa.Nome} - Idade: {pessoa.Idade} - Gênero: {pessoa.Genero} - Profissão: {pessoa.Profissao}");
                 }
                 else
                 {
-                    Console.WriteLine($"Cliente '{ConsultarNomeCliente}' não encontrado no sistema.");
+                    Console.WriteLine($"\nCliente '{ConsultarNomeCliente}' não encontrado no sistema.");
                 }
 
                 Console.WriteLine("\nDeseja consultar outro cliente? (S/N): ");
                 loop = Console.ReadLine();
 
             } while (loop.Equals("S", StringComparison.OrdinalIgnoreCase)); // loop para uma nova consulta
-        }
-
-        private Pessoa BuscarCliente(string nome) // método para consultagem se existe o nome inserido
-        {
-            foreach (Pessoa pessoa in Pessoas)
-            {
-                if (pessoa.Nome.Equals(nome, StringComparison.OrdinalIgnoreCase))
-                {
-                    return pessoa;
-                }
-            }
-            return null;
         }
 
         public void ConsultarSuite() // consulta de suíte
@@ -295,11 +300,11 @@ namespace ManipulacaoArrays
                     Suite suite = BuscarSuite(ConsultarNumeroSuite); // método para consultagem se existe o numero inserido
                     if (suite != null)
                     {
-                        Console.WriteLine($"Número: {suite.Numero} - Capacidade: {suite.Capacidade} - Valor Diária: R${suite.ValorDiaria}");
+                        Console.WriteLine($"\nNúmero: {suite.Numero} - Capacidade: {suite.Capacidade} - Valor Diária: R${suite.ValorDiaria}");
                     }
                     else
                     {
-                        Console.WriteLine($"Suíte '{ConsultarNumeroSuite}' não encontrada no sistema.");
+                        Console.WriteLine($"\nSuíte '{ConsultarNumeroSuite}' não encontrada no sistema.");
                     }
                 }
                 else
@@ -311,18 +316,6 @@ namespace ManipulacaoArrays
                 loop = Console.ReadLine();
 
             } while (loop.Equals("S", StringComparison.OrdinalIgnoreCase)); // loop para uma nova consulta
-        }
-
-        private Suite BuscarSuite(int numero) // método para consultagem se existe o numero inserido
-        {
-            foreach (Suite suite in Suites)
-            {
-                if (suite.Numero == numero)
-                {
-                    return suite;
-                }
-            }
-            return null;
         }
 
         public void ConsultarReserva() // consulta de reserva
@@ -337,11 +330,11 @@ namespace ManipulacaoArrays
                     Reserva reserva = BuscarReserva(ConsultarIdReserva); // método para consultagem se existe o id inserido
                     if (reserva != null)
                     {
-                        Console.WriteLine($"Id: {reserva.Id} - Id Cliente: {reserva.PessoaId} - Número da suíte: {reserva.SuiteNumero} - Data entrada: {reserva.DataEntrada} - Data saída: {reserva.DataSaida} - Valor Final: R${reserva.ValorFinal}");
+                        Console.WriteLine($"\nId: {reserva.Id} - Id Cliente: {reserva.PessoaId} - Número da suíte: {reserva.SuiteNumero} - Data entrada: {reserva.DataEntrada} - Data saída: {reserva.DataSaida} - Valor Final: R${reserva.ValorFinal}");
                     }
                     else
                     {
-                        Console.WriteLine($"Reserva '{ConsultarIdReserva}' não encontrada no sistema.");
+                        Console.WriteLine($"\nReserva '{ConsultarIdReserva}' não encontrada no sistema.");
                     }
                 }
                 else
@@ -353,18 +346,6 @@ namespace ManipulacaoArrays
                 loop = Console.ReadLine();
 
             } while (loop.Equals("S", StringComparison.OrdinalIgnoreCase)); // loop para uma nova consulta
-        }
-
-        private Reserva BuscarReserva(int id) // método para consultagem se existe o id inserido
-        {
-            foreach (Reserva reserva in Reservas)
-            {
-                if (reserva.Id == id)
-                {
-                    return reserva;
-                }
-            }
-            return null;
         }
 
         // fim método consultar
@@ -421,8 +402,8 @@ namespace ManipulacaoArrays
         // fim método listar
 
 
-        // filtragem de erros
-        public int Escolha() // escolha menu
+        // métodos de verificação
+        public static int Escolha() // escolha menu
         {
             int escolha;
             while (!int.TryParse(Console.ReadLine(), out escolha) || escolha < 1 || escolha > 4)
@@ -432,7 +413,7 @@ namespace ManipulacaoArrays
             return escolha;
         }
 
-        public int EscolhaCSR() // escolha Cliente/Suíte/Reserva CSR
+        public static int EscolhaCSR() // escolha Cliente/Suíte/Reserva CSR
         {
             int escolha;
             while (!int.TryParse(Console.ReadLine(), out escolha) || escolha < 1 || escolha > 3)
@@ -442,5 +423,77 @@ namespace ManipulacaoArrays
             return escolha;
         }
 
+        // itens do método cadastrar
+        private bool PessoaExiste(int pessoaId) // método privado para verificar se o do cliente id existe
+        {
+            return Pessoas.Any(p => p.Id == pessoaId);
+        }
+
+        private bool SuiteExiste(int suiteNumero) // método privado para verificar se o número da suíte existe
+        {
+            return Suites.Any(s => s.Numero == suiteNumero);
+        }
+
+        private bool ReservaExiste(int id) // método privado para verificar se o id da reserva existe
+        {
+            return Reservas.Any(r => r.Id == id);
+        }
+
+        public static double CalcularValorTotal(DateTime dataEntrada, DateTime dataSaida, Suite suite) // método para calcular valor total  
+        {
+            int diasDeEstadia = (int)(dataSaida - dataEntrada).TotalDays;
+
+            double valorTotal;
+
+            if (diasDeEstadia > 10)
+            {
+                double valorDiariaComDesconto = suite.ValorDiaria * 0.9; // calculo para desconto de 10% caso a hospendagem ultrapasse 10 dias
+                valorTotal = diasDeEstadia * valorDiariaComDesconto;
+            }
+            else
+            {
+                valorTotal = diasDeEstadia * suite.ValorDiaria;
+            }
+
+            return valorTotal;
+        }
+
+
+        //itens do método consultar
+        private Pessoa BuscarCliente(string nome) // método para consultagem se existe o nome do cliente inserido
+        {
+            foreach (Pessoa pessoa in Pessoas)
+            {
+                if (pessoa.Nome.Equals(nome, StringComparison.OrdinalIgnoreCase))
+                {
+                    return pessoa;
+                }
+            }
+            return null;
+        }
+
+        private Suite BuscarSuite(int numero) // método para consultagem se existe o número da suíte inserido
+        {
+            foreach (Suite suite in Suites)
+            {
+                if (suite.Numero == numero)
+                {
+                    return suite;
+                }
+            }
+            return null;
+        }
+
+        private Reserva BuscarReserva(int id) // método para consultagem se existe o id da reserva inserido
+        {
+            foreach (Reserva reserva in Reservas)
+            {
+                if (reserva.Id == id)
+                {
+                    return reserva;
+                }
+            }
+            return null;
+        }
     }
 }
