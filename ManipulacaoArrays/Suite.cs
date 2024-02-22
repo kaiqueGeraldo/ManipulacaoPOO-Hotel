@@ -17,12 +17,5 @@ namespace ManipulacaoArrays
         public Suite()
         {
         }
-        public Suite(int numero, int capacidade, double valorDiaria)
-        {
-            Numero = numero;
-            Capacidade = capacidade;
-            ValorDiaria = valorDiaria;
-            Reservas = new List<Reserva>();
-        }
     }
 }

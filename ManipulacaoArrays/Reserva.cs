@@ -22,14 +22,5 @@ namespace ManipulacaoArrays
         public Reserva()
         {
         }
-        public Reserva(int id, int pessoaId, int suiteNumero, DateTime dataEntrada, DateTime dataSaida, double valorFinal)
-        {
-            Id = id;
-            PessoaId = pessoaId;
-            SuiteNumero = suiteNumero;
-            DataEntrada = dataEntrada;
-            DataSaida = dataSaida;
-            ValorFinal = valorFinal;
-        }
     }
 }

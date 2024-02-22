@@ -19,14 +19,5 @@ namespace ManipulacaoArrays
         public Pessoa()
         {
         }
-
-        public Pessoa(string nome, int idade, string genero, string profissao)
-        {
-            Nome = nome;
-            Idade = idade;
-            Genero = genero;
-            Profissao = profissao;
-            Reservas = new List<Reserva>();
-        }
     }
 }
